@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Calcule o ROI do seu marketing imobiliário e descubra se está lucrando ou perdendo dinheiro">
+    <title>Calculadora de ROI - Marketing Imobiliário | RedattoLAB</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Urbanist:wght@600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            width: 100%;
+        }
+        
+        /* ========== BLOCO 1: BEM-VINDO ========== */
+        .welcome-section {
+            background: linear-gradient(135deg, #000000 0%, #084d6e 100%);
+            color: #fff;
+            padding: clamp(40px, 8vw, 60px) clamp(20px, 5vw, 40px);
+            text-align: center;
+            width: 100%;
+        }
+        
+        .welcome-container {
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+            padding: 0 15px;
+        }
+        
+        .welcome-badge {
+            display: inline-block;
+            background: rgba(218, 165, 32, 0.2);
+            color: #daa520;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: clamp(12px, 2.5vw, 14px);
+            font-weight: 600;
+            margin-bottom: 20px;
+            border: 1px solid #daa520;
+        }
+        
+        .welcome-title {
+            font-family: 'Urbanist', sans-serif;
+            font-size: clamp(26px, 5.5vw, 42px);
+            font-weight: 700;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            word-wrap: break-word;
+        }
+        
+        .welcome-subtitle {
+            font-size: clamp(16px, 3.5vw, 19px);
+            line-height: 1.6;
+            margin-bottom: 0;
+            opacity: 0.95;
+            max-width: 800px;
+            margin: 0 auto;
+            word-wrap: break-word;
+        }
+        
+        .welcome-benefits {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+        
+        .benefit-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: clamp(20px, 4vw, 25px);
+            border-radius: 12px;
+            border: 1px solid rgba(218, 165, 32, 0.3);
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+        
+        .benefit-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        .benefit-icon {
+            font-size: clamp(32px, 6vw, 36px);
+            margin-bottom: 12px;
+        }
+        
+        .benefit-title {
+            font-family: 'Urbanist', sans-serif;
+            font-size: clamp(16px, 3.5vw, 17px);
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #daa520;
+        }
+        
+        .benefit-text {
+            font-size: clamp(14px, 3vw, 15px);
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+        
+        /* ========== BLOCO 2: CALCULADORA ========== */
+        .calculator-section {
+            background: #f5f5f5;
+            padding: 0;
+            width: 100%;
+            overflow: hidden;
+        }
+        
+        .iframe-calculadora {
+            width: 100%;
+            border: none;
+            display: block;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            transition: height 0.4s ease;
+            min-height: 800px;
+        }
+        
+        /* ========== BLOCO 3: CTA ========== */
+        .cta-redatto {
+            background: linear-gradient(135deg, #000000 0%, #084d6e 100%);
+            color: #fff;
+            padding: clamp(40px, 8vw, 60px) clamp(20px, 5vw, 40px);
+            text-align: center;
+            width: 100%;
+            box-shadow: 0 -10px 40px rgba(0,0,0,0.3);
+        }
+        
+        .cta-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .cta-redatto h3 {
+            font-family: 'Urbanist', sans-serif;
+            font-size: clamp(24px, 5vw, 36px);
+            margin-bottom: 25px;
+            font-weight: 600;
+            line-height: 1.3;
+            word-wrap: break-word;
+        }
+        
+        .cta-redatto p {
+            font-size: clamp(16px, 3.5vw, 18px);
+            line-height: 1.7;
+            margin-bottom: 20px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            word-wrap: break-word;
+        }
+        
+        .cta-redatto p strong {
+            color: #daa520;
+            font-weight: 600;
+        }
+        
+        .cta-beneficios {
+            background: rgba(8, 77, 110, 0.3);
+            padding: clamp(25px, 5vw, 35px);
+            border-radius: 15px;
+            margin: 30px auto;
+            max-width: 750px;
+            border: 2px solid rgba(8, 77, 110, 0.5);
+        }
+        
+        .cta-beneficios h4 {
+            font-family: 'Urbanist', sans-serif;
+            margin-bottom: 20px;
+            font-size: clamp(20px, 4vw, 24px);
+            font-weight: 600;
+        }
+        
+        .cta-beneficios ul {
+            list-style: none;
+            padding: 0;
+            text-align: left;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+        
+        .cta-beneficios li {
+            padding: 12px 0 12px 35px;
+            position: relative;
+            font-size: clamp(15px, 3.5vw, 17px);
+            line-height: 1.6;
+            word-wrap: break-word;
+        }
+        
+        .cta-beneficios li span {
+            position: absolute;
+            left: 0;
+            color: #daa520;
+            font-weight: bold;
+            font-size: 20px;
+        }
+        
+        .cta-destaque {
+            font-family: 'Urbanist', sans-serif;
+            font-size: clamp(18px, 4vw, 22px);
+            font-weight: 600;
+            margin: 30px auto;
+            line-height: 1.4;
+            max-width: 800px;
+            word-wrap: break-word;
+        }
+        
+        .cta-btn-whatsapp {
+            display: inline-block;
+            padding: clamp(18px, 4vw, 22px) clamp(32px, 8vw, 55px);
+            background: #daa520;
+            color: #084d6e;
+            text-decoration: none;
+            border-radius: 12px;
+            font-family: 'Urbanist', sans-serif;
+            font-weight: 700;
+            font-size: clamp(16px, 3.5vw, 19px);
+            margin: 25px auto;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 6px 20px rgba(218, 165, 32, 0.4);
+            border: none;
+            cursor: pointer;
+            max-width: 90%;
+            text-align: center;
+            line-height: 1.4;
+            word-wrap: break-word;
+        }
+        
+        .cta-btn-whatsapp:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(218, 165, 32, 0.5);
+            background: #c99a1f;
+        }
+        
+        .cta-btn-whatsapp:active {
+            transform: translateY(0px);
+            box-shadow: 0 2px 8px rgba(218, 165, 32, 0.3);
+        }
+        
+        .cta-garantia {
+            font-size: clamp(14px, 3vw, 15px);
+            margin-top: 20px;
+            opacity: 0.95;
+            word-wrap: break-word;
+        }
+        
+        .cta-garantia strong {
+            color: #daa520;
+            font-weight: 600;
+        }
+        
+        /* ========== RESPONSIVO ========== */
+        @media (max-width: 768px) {
+            .welcome-benefits {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .iframe-calculadora {
+                min-height: 1000px;
+            }
+            
+            .cta-beneficios li {
+                padding-left: 32px;
+            }
+            
+            .cta-btn-whatsapp {
+                width: 90%;
+                padding: 20px 30px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            body {
+                font-size: 16px;
+            }
+            
+            .welcome-section,
+            .cta-redatto {
+                padding: 35px 20px;
+            }
+            
+            .benefit-card {
+                padding: 22px 18px;
+            }
+            
+            .cta-beneficios {
+                padding: 25px 20px;
+            }
+            
+            .cta-beneficios li {
+                padding-left: 30px;
+                font-size: 15px;
+            }
+            
+            .cta-beneficios li span {
+                font-size: 18px;
+            }
+            
+            .iframe-calculadora {
+                min-height: 1100px;
+            }
+            
+            .cta-btn-whatsapp {
+                width: 100%;
+                padding: 18px 25px;
+            }
+        }
+        
+        @media (max-width: 360px) {
+            .welcome-title {
+                font-size: 24px;
+            }
+            
+            .cta-redatto h3 {
+                font-size: 22px;
+            }
+            
+            .iframe-calculadora {
+                min-height: 1200px;
+            }
+        }
+        
+        /* Ajustes para telas grandes */
+        @media (min-width: 1400px) {
+            .welcome-container,
+            .cta-container {
+                max-width: 1100px;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- BLOCO 1: BEM-VINDO -->
+    <section class="welcome-section">
+        <div class="welcome-container">
+            <div class="welcome-badge">✓ Acesso Liberado</div>
+            
+            <h1 class="welcome-title">Parabéns! Sua calculadora está pronta</h1>
+            
+            <p class="welcome-subtitle">
+                Você está a poucos minutos de descobrir se seu investimento em marketing está gerando lucro ou prejuízo. Nossa calculadora vai revelar dados que uma boa parte das empresas do setor imobiliário ignora - e que fazem toda diferença no resultado final.
+            </p>
+            
+            <div class="welcome-benefits">
+                <div class="benefit-card">
+                    <div class="benefit-icon">📊</div>
+                    <div class="benefit-title">Análise Completa</div>
+                    <div class="benefit-text">ROI, CPL, taxa de conversão e outras métricas essenciais</div>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">💡</div>
+                    <div class="benefit-title">Insights Personalizados</div>
+                    <div class="benefit-text">Recomendações específicas baseadas nos seus números</div>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">🎯</div>
+                    <div class="benefit-title">100% Confidencial</div>
+                    <div class="benefit-text">Seus dados são privados e não serão compartilhados</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- BLOCO 2: CALCULADORA -->
+    <section class="calculator-section">
+        <iframe 
+            src="https://redattolab.com.br/wp-content/uploads/Calculadora/calculadora-roi.html" 
+            class="iframe-calculadora" 
+            id="calcIframe" 
+            scrolling="no"
+            title="Calculadora de ROI">
+        </iframe>
+    </section>
+    
+    <!-- BLOCO 3: CTA -->
+    <section class="cta-redatto">
+        <div class="cta-container">
+            <h3>🚀 Transforme esses números em resultados extraordinários</h3>
+            
+            <p>Agora que você conhece seu ROI atual, chegou a hora de <strong>multiplicar seus resultados</strong> e parar de desperdiçar dinheiro em marketing que não converte.</p>
+            
+            <p>A <strong>RedattoLAB</strong> é especialista em <strong>marketing digital para imobiliárias</strong> e já ajudou dezenas de empresas a aumentarem seu ROI, gerando mais leads qualificados e fechando mais vendas.</p>
+            
+            <div class="cta-beneficios">
+                <h4>✅ O que você ganha com a RedattoLAB:</h4>
+                <ul>
+                    <li><span>✓</span> Estratégias comprovadas de tráfego pago para imóveis</li>
+                    <li><span>✓</span> Redução do custo por lead em até 60%</li>
+                    <li><span>✓</span> Funil de vendas otimizado para converter leads em clientes</li>
+                    <li><span>✓</span> Análise completa do seu marketing atual</li>
+                    <li><span>✓</span> Acompanhamento de resultados em tempo real</li>
+                </ul>
+            </div>
+            
+            <p class="cta-destaque">
+                ⏰ <strong>Quanto dinheiro você está perdendo a cada dia que passa sem otimizar seu marketing?</strong>
+            </p>
+            
+            <p>Pare de deixar dinheiro na mesa. Fale com nossos especialistas e descubra como aumentar seu ROI, gerar leads de qualidade e vender mais imóveis.</p>
+            
+            <a href="https://wa.me/5548999867086?text=Olá,%20acabei%20de%20calcular%20meu%20ROI%20e%20quero%20falar%20com%20um%20especialista" 
+               class="cta-btn-whatsapp" 
+               target="_blank" 
+               rel="noopener noreferrer"
+               onclick="if(typeof gtag !== 'undefined'){gtag('event', 'contact_whatsapp', {'event_category': 'Conversion', 'event_label': 'WhatsApp CTA'}); console.log('✅ GA4: Clique WhatsApp');} if(typeof fbq !== 'undefined'){fbq('track', 'Contact', {content_name: 'WhatsApp CTA'}); console.log('✅ Meta Pixel: Clique WhatsApp');} return true;">
+                💬 QUERO FALAR COM UM ESPECIALISTA AGORA
+            </a>
+            
+            <p class="cta-garantia">
+                <strong>Consultoria inicial 100% gratuita</strong> • Sem compromisso • Resposta em até 24h
+            </p>
+        </div>
+    </section>
+    
+    <!-- SCRIPTS -->
+    <script>
+        // Ajuste automático de altura do iframe
+        window.addEventListener('message', function(e) {
+            if (e.data && e.data.height) {
+                var iframe = document.getElementById('calcIframe');
+                var novaAltura = e.data.height + 100;
+                iframe.style.height = novaAltura + 'px';
+                console.log('Altura ajustada para: ' + novaAltura + 'px');
+            }
+            
+            // Rastreamento GA4 e Meta Pixel
+            if (e.data && e.data.event === 'calculator_used') {
+                if(typeof gtag !== 'undefined') {
+                    gtag('event', 'calculator_used', {
+                        'event_category': 'Engagement',
+                        'event_label': 'ROI Calculado',
+                        'roi_value': e.data.roi,
+                        'roi_status': e.data.status
+                    });
+                    console.log('✅ GA4: Calculadora usada - ROI: ' + e.data.roi + '%');
+                }
+                
+                if(typeof fbq !== 'undefined') {
+                    fbq('trackCustom', 'CalculadoraUsada', {
+                        roi_value: e.data.roi,
+                        roi_status: e.data.status,
+                        leads: e.data.leads,
+                        vendas: e.data.vendas
+                    });
+                    console.log('✅ Meta Pixel: Calculadora usada');
+                }
+            }
+        });
+        
+        // Ajuste inicial após carregamento
+        window.addEventListener('load', function() {
+            var iframe = document.getElementById('calcIframe');
+            iframe.style.height = '1000px';
+        });
+    </script>
+    
+</body>
+</html>
