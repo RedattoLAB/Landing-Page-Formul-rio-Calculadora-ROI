@@ -686,6 +686,10 @@
         
         /* ========== RESPONSIVO ========== */
         @media (max-width: 768px) {
+            .welcome-section {
+                padding-top: clamp(110px, 18vw, 130px);
+            }
+            
             .welcome-benefits {
                 grid-template-columns: 1fr;
                 gap: 15px;
@@ -710,9 +714,15 @@
                 font-size: 16px;
             }
             
+            .welcome-section {
+                padding-top: 100px;
+            }
+            
             .welcome-section,
             .cta-redatto {
-                padding: 35px 20px;
+                padding-bottom: 35px;
+                padding-left: 20px;
+                padding-right: 20px;
             }
             
             .benefit-card {
