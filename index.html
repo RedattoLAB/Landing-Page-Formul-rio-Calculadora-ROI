@@ -432,13 +432,14 @@
         }
         
         .cta-beneficios h4::before {
-            content: '✅ ';
+            content: '🎁 ';
             background: linear-gradient(135deg, #daa520 0%, #ffd700 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             font-size: 1.1em;
             margin-right: 8px;
+            filter: drop-shadow(0 2px 4px rgba(218, 165, 32, 0.4));
         }
         
         .cta-beneficios h4::after {
@@ -464,31 +465,35 @@
         }
         
         .cta-beneficios li {
-            padding: 18px 15px 18px 60px;
+            padding: 20px 15px 20px 65px;
             position: relative;
-            font-size: clamp(16px, 3.8vw, 18px);
-            line-height: 1.7;
+            font-size: clamp(15px, 3.5vw, 18px);
+            line-height: 1.8;
             word-wrap: break-word;
-            margin-bottom: 8px;
+            margin-bottom: 12px;
             transition: all 0.3s ease;
             border-radius: 12px;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
         }
         
         .cta-beneficios li:hover {
             background: rgba(218, 165, 32, 0.08);
-            padding-left: 65px;
+            padding-left: 70px;
             transform: translateX(5px);
         }
         
         .cta-beneficios li span {
             position: absolute;
             left: 15px;
-            top: 18px;
+            top: 50%;
+            transform: translateY(-50%);
             color: #daa520;
             font-weight: bold;
-            font-size: 20px;
-            width: 32px;
-            height: 32px;
+            font-size: 18px;
+            width: 36px;
+            height: 36px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -510,30 +515,39 @@
         /* Ajustes específicos para mobile */
         @media (max-width: 768px) {
             .cta-beneficios li {
-                padding: 16px 12px 16px 55px;
+                padding: 18px 12px 18px 60px;
+                min-height: 56px;
+            }
+            
+            .cta-beneficios li:hover {
+                padding-left: 65px;
             }
             
             .cta-beneficios li span {
                 left: 12px;
-                top: 16px;
-                width: 28px;
-                height: 28px;
-                font-size: 18px;
+                width: 32px;
+                height: 32px;
+                font-size: 16px;
             }
         }
         
         @media (max-width: 480px) {
             .cta-beneficios li {
-                padding: 14px 10px 14px 50px;
+                padding: 16px 10px 16px 55px;
                 font-size: 15px;
+                line-height: 1.7;
+                min-height: 52px;
+            }
+            
+            .cta-beneficios li:hover {
+                padding-left: 60px;
             }
             
             .cta-beneficios li span {
                 left: 10px;
-                top: 14px;
-                width: 26px;
-                height: 26px;
-                font-size: 16px;
+                width: 30px;
+                height: 30px;
+                font-size: 15px;
             }
         }
         
