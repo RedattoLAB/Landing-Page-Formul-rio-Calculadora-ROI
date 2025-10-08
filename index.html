@@ -23,13 +23,82 @@
             width: 100%;
         }
         
+        /* ========== ANIMAÇÕES ========== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+        
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+        
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
         /* ========== BLOCO 1: BEM-VINDO ========== */
         .welcome-section {
-            background: linear-gradient(135deg, #000000 0%, #084d6e 100%);
+            background: linear-gradient(135deg, #000000 0%, #084d6e 50%, #000000 100%);
+            background-size: 200% 200%;
+            animation: gradientShift 15s ease infinite;
             color: #fff;
             padding: clamp(40px, 8vw, 60px) clamp(20px, 5vw, 40px);
             text-align: center;
             width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .welcome-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(218, 165, 32, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(8, 77, 110, 0.2) 0%, transparent 50%);
+            pointer-events: none;
         }
         
         .welcome-container {
@@ -37,6 +106,8 @@
             margin: 0 auto;
             width: 100%;
             padding: 0 15px;
+            position: relative;
+            z-index: 1;
         }
         
         .welcome-badge {
@@ -49,6 +120,8 @@
             font-weight: 600;
             margin-bottom: 20px;
             border: 1px solid #daa520;
+            animation: fadeIn 0.8s ease;
+            backdrop-filter: blur(10px);
         }
         
         .welcome-title {
@@ -58,6 +131,7 @@
             margin-bottom: 20px;
             line-height: 1.2;
             word-wrap: break-word;
+            animation: fadeInUp 1s ease 0.2s both;
         }
         
         .welcome-subtitle {
@@ -68,45 +142,147 @@
             max-width: 800px;
             margin: 0 auto;
             word-wrap: break-word;
+            animation: fadeInUp 1s ease 0.4s both;
         }
         
         .welcome-benefits {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
-            gap: 20px;
-            margin-top: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+            gap: 30px;
+            margin-top: 50px;
+            perspective: 1000px;
         }
         
         .benefit-card {
-            background: rgba(255, 255, 255, 0.1);
-            padding: clamp(20px, 4vw, 25px);
-            border-radius: 12px;
-            border: 1px solid rgba(218, 165, 32, 0.3);
-            transition: transform 0.3s ease, background 0.3s ease;
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.05));
+            padding: clamp(30px, 5vw, 40px);
+            border-radius: 20px;
+            border: 2px solid rgba(218, 165, 32, 0.2);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(20px) saturate(180%);
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .benefit-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, 
+                rgba(218, 165, 32, 0.05) 0%, 
+                transparent 50%, 
+                rgba(8, 77, 110, 0.05) 100%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+        }
+        
+        .benefit-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, 
+                transparent 30%, 
+                rgba(218, 165, 32, 0.1) 50%, 
+                transparent 70%);
+            transform: translateX(-100%) translateY(-100%) rotate(45deg);
+            transition: transform 0.8s ease;
+        }
+        
+        .benefit-card:hover::before {
+            opacity: 1;
+        }
+        
+        .benefit-card:hover::after {
+            transform: translateX(0) translateY(0) rotate(45deg);
         }
         
         .benefit-card:hover {
-            transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-12px) rotateX(5deg);
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.08));
+            box-shadow: 
+                0 20px 60px rgba(218, 165, 32, 0.4),
+                0 0 40px rgba(218, 165, 32, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            border-color: rgba(218, 165, 32, 0.8);
         }
         
         .benefit-icon {
-            font-size: clamp(32px, 6vw, 36px);
-            margin-bottom: 12px;
+            font-size: clamp(40px, 7vw, 48px);
+            margin-bottom: 20px;
+            display: inline-block;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            filter: drop-shadow(0 4px 8px rgba(218, 165, 32, 0.3));
+            position: relative;
+            z-index: 1;
+        }
+        
+        .benefit-card:hover .benefit-icon {
+            transform: scale(1.15) translateY(-5px);
+            filter: drop-shadow(0 8px 16px rgba(218, 165, 32, 0.6));
         }
         
         .benefit-title {
             font-family: 'Urbanist', sans-serif;
-            font-size: clamp(16px, 3.5vw, 17px);
-            font-weight: 600;
-            margin-bottom: 8px;
+            font-size: clamp(18px, 4vw, 20px);
+            font-weight: 700;
+            margin-bottom: 12px;
             color: #daa520;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
         
         .benefit-text {
-            font-size: clamp(14px, 3vw, 15px);
-            opacity: 0.9;
-            line-height: 1.5;
+            font-size: clamp(15px, 3.2vw, 16px);
+            opacity: 0.95;
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.9);
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Efeito de brilho sutil nos cards */
+        @keyframes shimmer {
+            0% {
+                background-position: -200% center;
+            }
+            100% {
+                background-position: 200% center;
+            }
+        }
+        
+        .benefit-card-wrapper {
+            position: relative;
+        }
+        
+        .benefit-number {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-family: 'Urbanist', sans-serif;
+            font-size: clamp(48px, 8vw, 72px);
+            font-weight: 700;
+            color: rgba(218, 165, 32, 0.08);
+            line-height: 1;
+            z-index: 0;
+            transition: all 0.5s ease;
+        }
+        
+        .benefit-card:hover .benefit-number {
+            color: rgba(218, 165, 32, 0.15);
+            transform: scale(1.1);
         }
         
         /* ========== BLOCO 2: CALCULADORA ========== */
@@ -169,43 +345,157 @@
         }
         
         .cta-beneficios {
-            background: rgba(8, 77, 110, 0.3);
-            padding: clamp(25px, 5vw, 35px);
-            border-radius: 15px;
-            margin: 30px auto;
-            max-width: 750px;
-            border: 2px solid rgba(8, 77, 110, 0.5);
+            background: linear-gradient(145deg, rgba(8, 77, 110, 0.4), rgba(8, 77, 110, 0.2));
+            padding: clamp(35px, 6vw, 50px);
+            border-radius: 24px;
+            margin: 40px auto;
+            max-width: 850px;
+            border: 2px solid rgba(218, 165, 32, 0.3);
+            backdrop-filter: blur(20px) saturate(180%);
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.4),
+                0 0 40px rgba(218, 165, 32, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .cta-beneficios::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 20%, rgba(218, 165, 32, 0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 80%, rgba(8, 77, 110, 0.15) 0%, transparent 50%);
+            pointer-events: none;
+            opacity: 0.6;
+        }
+        
+        .cta-beneficios::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, 
+                rgba(218, 165, 32, 0.4) 0%, 
+                rgba(8, 77, 110, 0.4) 25%,
+                rgba(218, 165, 32, 0.4) 50%,
+                rgba(8, 77, 110, 0.4) 75%,
+                rgba(218, 165, 32, 0.4) 100%);
+            background-size: 300% 300%;
+            border-radius: 24px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            animation: borderGlow 4s ease infinite;
+        }
+        
+        @keyframes borderGlow {
+            0%, 100% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+        
+        .cta-beneficios:hover::after {
+            opacity: 1;
+        }
+        
+        .cta-beneficios:hover {
+            transform: translateY(-8px);
+            box-shadow: 
+                0 30px 80px rgba(218, 165, 32, 0.4),
+                0 0 60px rgba(218, 165, 32, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
         }
         
         .cta-beneficios h4 {
             font-family: 'Urbanist', sans-serif;
-            margin-bottom: 20px;
-            font-size: clamp(20px, 4vw, 24px);
-            font-weight: 600;
+            margin-bottom: 30px;
+            font-size: clamp(22px, 4.5vw, 28px);
+            font-weight: 700;
+            text-align: center;
+            background: linear-gradient(135deg, #daa520 0%, #ffd700 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+            z-index: 1;
+            letter-spacing: 0.5px;
+            text-shadow: 0 2px 10px rgba(218, 165, 32, 0.3);
+        }
+        
+        .cta-beneficios h4::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #daa520, transparent);
+            border-radius: 2px;
         }
         
         .cta-beneficios ul {
             list-style: none;
             padding: 0;
             text-align: left;
-            max-width: 650px;
+            max-width: 700px;
             margin: 0 auto;
+            position: relative;
+            z-index: 1;
         }
         
         .cta-beneficios li {
-            padding: 12px 0 12px 35px;
+            padding: 18px 0 18px 50px;
             position: relative;
-            font-size: clamp(15px, 3.5vw, 17px);
-            line-height: 1.6;
+            font-size: clamp(16px, 3.8vw, 18px);
+            line-height: 1.7;
             word-wrap: break-word;
+            margin-bottom: 8px;
+            transition: all 0.3s ease;
+            border-radius: 12px;
+        }
+        
+        .cta-beneficios li:hover {
+            background: rgba(218, 165, 32, 0.08);
+            padding-left: 55px;
+            transform: translateX(5px);
         }
         
         .cta-beneficios li span {
             position: absolute;
-            left: 0;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
             color: #daa520;
             font-weight: bold;
-            font-size: 20px;
+            font-size: 24px;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(218, 165, 32, 0.15);
+            border-radius: 50%;
+            border: 2px solid rgba(218, 165, 32, 0.3);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .cta-beneficios li:hover span {
+            background: rgba(218, 165, 32, 0.25);
+            border-color: rgba(218, 165, 32, 0.6);
+            transform: translateY(-50%) scale(1.15) rotate(360deg);
+            box-shadow: 0 0 20px rgba(218, 165, 32, 0.4);
         }
         
         .cta-destaque {
@@ -221,7 +511,7 @@
         .cta-btn-whatsapp {
             display: inline-block;
             padding: clamp(18px, 4vw, 22px) clamp(32px, 8vw, 55px);
-            background: #daa520;
+            background: linear-gradient(135deg, #daa520 0%, #c99a1f 100%);
             color: #084d6e;
             text-decoration: none;
             border-radius: 12px;
@@ -229,7 +519,7 @@
             font-weight: 700;
             font-size: clamp(16px, 3.5vw, 19px);
             margin: 25px auto;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             box-shadow: 0 6px 20px rgba(218, 165, 32, 0.4);
             border: none;
             cursor: pointer;
@@ -237,17 +527,35 @@
             text-align: center;
             line-height: 1.4;
             word-wrap: break-word;
+            position: relative;
+            overflow: hidden;
+            animation: pulse 2s infinite;
+        }
+        
+        .cta-btn-whatsapp::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+        
+        .cta-btn-whatsapp:hover::before {
+            left: 100%;
         }
         
         .cta-btn-whatsapp:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(218, 165, 32, 0.5);
-            background: #c99a1f;
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 12px 35px rgba(218, 165, 32, 0.6);
+            background: linear-gradient(135deg, #c99a1f 0%, #daa520 100%);
         }
         
         .cta-btn-whatsapp:active {
-            transform: translateY(0px);
-            box-shadow: 0 2px 8px rgba(218, 165, 32, 0.3);
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 6px 20px rgba(218, 165, 32, 0.4);
         }
         
         .cta-garantia {
@@ -341,6 +649,17 @@
                 max-width: 1100px;
             }
         }
+        
+        /* Reduzir animações em dispositivos com preferência por movimento reduzido */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -357,22 +676,25 @@
             </p>
             
             <div class="welcome-benefits">
-                <div class="benefit-card">
+                <div class="benefit-card animate-on-scroll" style="transition-delay: 0.1s;">
+                    <div class="benefit-number">01</div>
                     <div class="benefit-icon">📊</div>
                     <div class="benefit-title">Análise Completa</div>
-                    <div class="benefit-text">ROI, CPL, taxa de conversão e outras métricas essenciais</div>
+                    <div class="benefit-text">ROI, CPL, taxa de conversão e outras métricas essenciais para decisões estratégicas baseadas em dados reais</div>
                 </div>
                 
-                <div class="benefit-card">
+                <div class="benefit-card animate-on-scroll" style="transition-delay: 0.2s;">
+                    <div class="benefit-number">02</div>
                     <div class="benefit-icon">💡</div>
                     <div class="benefit-title">Insights Personalizados</div>
-                    <div class="benefit-text">Recomendações específicas baseadas nos seus números</div>
+                    <div class="benefit-text">Recomendações específicas e acionáveis baseadas nos seus números, criadas por especialistas do mercado imobiliário</div>
                 </div>
                 
-                <div class="benefit-card">
+                <div class="benefit-card animate-on-scroll" style="transition-delay: 0.3s;">
+                    <div class="benefit-number">03</div>
                     <div class="benefit-icon">🎯</div>
                     <div class="benefit-title">100% Confidencial</div>
-                    <div class="benefit-text">Seus dados são privados e não serão compartilhados</div>
+                    <div class="benefit-text">Seus dados são tratados com máxima segurança e confidencialidade, garantindo total privacidade empresarial</div>
                 </div>
             </div>
         </div>
@@ -392,38 +714,38 @@
     <!-- BLOCO 3: CTA -->
     <section class="cta-redatto">
         <div class="cta-container">
-            <h3>🚀 Transforme esses números em resultados extraordinários</h3>
+            <h3 class="animate-on-scroll">🚀 Transforme esses números em resultados extraordinários</h3>
             
-            <p>Agora que você conhece seu ROI atual, chegou a hora de <strong>multiplicar seus resultados</strong> e parar de desperdiçar dinheiro em marketing que não converte.</p>
+            <p class="animate-on-scroll">Agora que você conhece seu ROI atual, chegou a hora de <strong>multiplicar seus resultados</strong> e parar de desperdiçar dinheiro em marketing que não converte.</p>
             
-            <p>A <strong>RedattoLAB</strong> é especialista em <strong>marketing digital para imobiliárias</strong> e já ajudou dezenas de empresas a aumentarem seu ROI, gerando mais leads qualificados e fechando mais vendas.</p>
+            <p class="animate-on-scroll">A <strong>RedattoLAB</strong> é especialista em <strong>marketing digital para imobiliárias</strong> e já ajudou dezenas de empresas a aumentarem seu ROI, gerando mais leads qualificados e fechando mais vendas.</p>
             
-            <div class="cta-beneficios">
-                <h4>✅ O que você ganha com a RedattoLAB:</h4>
+            <div class="cta-beneficios animate-on-scroll">
+                <h4>✅ O que você ganha com a RedattoLAB</h4>
                 <ul>
-                    <li><span>✓</span> Estratégias comprovadas de tráfego pago para imóveis</li>
-                    <li><span>✓</span> Redução do custo por lead em até 60%</li>
-                    <li><span>✓</span> Funil de vendas otimizado para converter leads em clientes</li>
-                    <li><span>✓</span> Análise completa do seu marketing atual</li>
-                    <li><span>✓</span> Acompanhamento de resultados em tempo real</li>
+                    <li><span>✓</span> <strong>Estratégias comprovadas</strong> de tráfego pago especializadas para o mercado imobiliário</li>
+                    <li><span>✓</span> <strong>Redução do custo por lead em até 60%</strong> com otimizações inteligentes</li>
+                    <li><span>✓</span> <strong>Funil de vendas otimizado</strong> para converter leads qualificados em clientes fechados</li>
+                    <li><span>✓</span> <strong>Análise completa e diagnóstico</strong> do seu marketing atual sem custo</li>
+                    <li><span>✓</span> <strong>Acompanhamento em tempo real</strong> com dashboard exclusivo de resultados</li>
                 </ul>
             </div>
             
-            <p class="cta-destaque">
+            <p class="cta-destaque animate-on-scroll">
                 ⏰ <strong>Quanto dinheiro você está perdendo a cada dia que passa sem otimizar seu marketing?</strong>
             </p>
             
-            <p>Pare de deixar dinheiro na mesa. Fale com nossos especialistas e descubra como aumentar seu ROI, gerar leads de qualidade e vender mais imóveis.</p>
+            <p class="animate-on-scroll">Pare de deixar dinheiro na mesa. Fale com nossos especialistas e descubra como aumentar seu ROI, gerar leads de qualidade e vender mais imóveis.</p>
             
             <a href="https://wa.me/5548999867086?text=Olá,%20acabei%20de%20calcular%20meu%20ROI%20e%20quero%20falar%20com%20um%20especialista" 
-               class="cta-btn-whatsapp" 
+               class="cta-btn-whatsapp animate-on-scroll" 
                target="_blank" 
                rel="noopener noreferrer"
                onclick="if(typeof gtag !== 'undefined'){gtag('event', 'contact_whatsapp', {'event_category': 'Conversion', 'event_label': 'WhatsApp CTA'}); console.log('✅ GA4: Clique WhatsApp');} if(typeof fbq !== 'undefined'){fbq('track', 'Contact', {content_name: 'WhatsApp CTA'}); console.log('✅ Meta Pixel: Clique WhatsApp');} return true;">
                 💬 QUERO FALAR COM UM ESPECIALISTA AGORA
             </a>
             
-            <p class="cta-garantia">
+            <p class="cta-garantia animate-on-scroll">
                 <strong>Consultoria inicial 100% gratuita</strong> • Sem compromisso • Resposta em até 24h
             </p>
         </div>
@@ -431,7 +753,35 @@
     
     <!-- SCRIPTS -->
     <script>
-        // Ajuste automático de altura do iframe
+        // ========== ANIMAÇÃO AO ROLAR (SCROLL REVEAL) ==========
+        function initScrollAnimations() {
+            const observerOptions = {
+                threshold: 0.15,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+            
+            document.querySelectorAll('.animate-on-scroll').forEach(el => {
+                observer.observe(el);
+            });
+        }
+        
+        // Inicializa animações quando o DOM estiver pronto
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initScrollAnimations);
+        } else {
+            initScrollAnimations();
+        }
+        
+        // ========== AJUSTE DE ALTURA DO IFRAME ==========
         window.addEventListener('message', function(e) {
             if (e.data && e.data.height) {
                 var iframe = document.getElementById('calcIframe');
